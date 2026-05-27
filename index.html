@@ -507,6 +507,11 @@
 
       document.getElementById('intake-form').style.display = 'none';
       document.getElementById('success').style.display     = 'block';
+      document.getElementById('step-label').textContent    = '';
+      document.getElementById('progress-pct').textContent  = '';
+      for (let i = 1; i <= 5; i++) {
+        document.getElementById('p' + i).classList.remove('done');
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
     } catch (err) {
