@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Projectaanvraag — Meubelontwerp op maat</title>
+<title>Projectaanvraag — Franzel Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="canonical" href="https://aanvraag.franzel.be" />
+<script src="https://www.google.com/recaptcha/api.js?render=6LdyyQotAAAAAC_Q14SGdc3H3Op0FxIPA6hUNneU"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -21,21 +23,26 @@
   html { font-size: 16px; }
   body { font-family: var(--font-body); background: var(--paper); color: var(--ink); line-height: 1.65; min-height: 100vh; }
   .page { max-width: 700px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
-  .site-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 3.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
-  .site-header .logo { font-family: var(--font-head); font-size: 1.25rem; color: var(--ink); letter-spacing: -0.01em; }
-  .site-header .step-counter { font-size: 0.8rem; color: var(--ink-soft); font-weight: 300; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* Header */
+  .site-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+  .site-header .logo img { height: 32px; width: auto; display: block; }
+  .site-header .time-estimate { font-size: 0.8rem; color: var(--ink-soft); font-weight: 300; letter-spacing: 0.04em; display: flex; align-items: center; gap: 6px; }
+  .site-header .time-estimate svg { opacity: 0.5; }
+
+  /* Intro */
   .form-intro { margin-bottom: 2.75rem; }
   .form-intro h1 { font-family: var(--font-head); font-size: 2.1rem; line-height: 1.2; color: var(--ink); margin-bottom: 0.75rem; letter-spacing: -0.02em; }
   .form-intro h1 em { font-style: italic; color: var(--accent); }
   .form-intro p { font-size: 0.95rem; color: var(--ink-mid); max-width: 520px; font-weight: 300; }
-  .progress { display: flex; gap: 5px; margin-bottom: 3rem; align-items: center; }
-  .progress-seg { height: 2px; flex: 1; background: var(--paper-3); border-radius: 99px; transition: background 0.4s ease; }
-  .progress-seg.done { background: var(--accent); }
-  .progress-label { font-size: 0.72rem; color: var(--ink-soft); letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; margin-left: 8px; font-weight: 500; }
+
+  /* Sections */
   .form-section { margin-bottom: 3rem; }
   .section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 1.75rem; }
   .section-num { width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 0.7rem; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; letter-spacing: 0.03em; }
   .section-title { font-family: var(--font-head); font-size: 1.2rem; color: var(--ink); letter-spacing: -0.01em; }
+
+  /* Fields */
   .field { margin-bottom: 1.5rem; }
   .field label { display: block; font-size: 0.875rem; font-weight: 500; color: var(--ink); margin-bottom: 5px; }
   .field .hint { font-size: 0.82rem; color: var(--ink-soft); margin-bottom: 7px; font-weight: 300; }
@@ -45,15 +52,21 @@
   input:focus, textarea:focus, select:focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px rgba(45,90,61,0.08); }
   input.error, textarea.error { border-color: var(--danger); }
   textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+
+  /* Radio / Checkbox */
   .choice-list { display: flex; flex-direction: column; gap: 9px; }
   .choice-item { display: flex; align-items: flex-start; gap: 11px; cursor: pointer; font-size: 0.9rem; color: var(--ink); font-weight: 300; line-height: 1.4; padding: 2px 0; }
   .choice-item input[type="radio"], .choice-item input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; accent-color: var(--accent); cursor: pointer; }
+
+  /* Tag pills */
   .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
   .tag { position: relative; }
   .tag input { position: absolute; opacity: 0; width: 0; height: 0; }
   .tag label { display: inline-block; padding: 7px 15px; border: 1px solid var(--border); border-radius: 99px; font-size: 0.83rem; cursor: pointer; color: var(--ink-mid); background: #fff; font-weight: 400; transition: all 0.15s; line-height: 1; }
   .tag input:checked + label { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); font-weight: 500; }
   .tag label:hover { border-color: var(--ink-soft); color: var(--ink); }
+
+  /* Budget cards */
   .budget-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .budget-card { position: relative; }
   .budget-card input { position: absolute; opacity: 0; width: 0; height: 0; }
@@ -63,6 +76,8 @@
   .budget-card .amount { font-family: var(--font-head); font-size: 1.05rem; color: var(--ink); display: block; margin-bottom: 3px; }
   .budget-card input:checked + label .amount { color: var(--accent); }
   .budget-card .desc { font-size: 0.78rem; color: var(--ink-soft); font-weight: 300; line-height: 1.4; }
+
+  /* File drop */
   .file-drop { border: 1px dashed var(--border); border-radius: var(--radius-lg); padding: 22px; text-align: center; cursor: pointer; background: var(--paper-2); transition: border-color 0.15s, background 0.15s; }
   .file-drop:hover { border-color: var(--ink-soft); background: var(--paper-3); }
   .file-drop svg { display: block; margin: 0 auto 8px; opacity: 0.4; }
@@ -75,7 +90,11 @@
   .file-item .upload-status.pending { color: var(--ink-soft); }
   .file-item .upload-status.ok { color: var(--accent); }
   .file-item .upload-status.fail { color: var(--danger); }
+
+  /* Divider */
   .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+
+  /* Submit */
   .submit-area { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
   .submit-note { font-size: 0.8rem; color: var(--ink-soft); font-weight: 300; max-width: 340px; }
   .btn-submit { display: inline-flex; align-items: center; gap: 10px; background: var(--ink); color: var(--paper); border: none; border-radius: var(--radius-lg); padding: 13px 28px; font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; cursor: pointer; letter-spacing: 0.01em; transition: opacity 0.15s, transform 0.1s; white-space: nowrap; }
@@ -84,6 +103,8 @@
   .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
   .btn-submit svg { transition: transform 0.2s; }
   .btn-submit:hover svg { transform: translateX(3px); }
+
+  /* States */
   .error-banner { display: none; background: var(--danger-bg); border: 1px solid rgba(184,64,64,0.2); border-radius: var(--radius); padding: 11px 14px; font-size: 0.85rem; color: var(--danger); margin-bottom: 1.5rem; }
   .success-screen { display: none; text-align: center; padding: 4rem 2rem; }
   .success-screen .check { width: 56px; height: 56px; border-radius: 50%; background: var(--accent-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; }
@@ -94,6 +115,12 @@
   .spinner { width: 32px; height: 32px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .sending-overlay p { font-size: 0.85rem; color: var(--ink-mid); font-weight: 300; }
+
+  /* reCAPTCHA badge reposition */
+  .grecaptcha-badge { visibility: hidden; }
+  .recaptcha-note { font-size: 0.75rem; color: var(--ink-soft); margin-top: 1rem; font-weight: 300; }
+  .recaptcha-note a { color: var(--ink-soft); }
+
   @media (max-width: 520px) {
     .grid-2 { grid-template-columns: 1fr; }
     .budget-grid { grid-template-columns: 1fr; }
@@ -111,22 +138,20 @@
 
 <div class="page">
   <header class="site-header">
-    <span class="logo">Franzel</span>
-    <span class="step-counter" id="step-label">Stap 0 / 5</span>
+    <div class="logo">
+      <img src="https://cornichondesign.github.io/intake/logo.png" alt="Franzel Studio" />
+    </div>
+    <div class="time-estimate">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+      </svg>
+      ± 3 minuten
+    </div>
   </header>
 
-  <div class="form-intro">
-    <h1>Vertel me over je <em>project</em></h1>
-    <p>Vul dit formulier in vóór ons eerste gesprek. Hoe meer context je deelt, hoe gerichter ons gesprek wordt — en hoe sneller we kunnen inschatten of het project haalbaar is.</p>
-  </div>
-
-  <div class="progress">
-    <div class="progress-seg" id="p1"></div>
-    <div class="progress-seg" id="p2"></div>
-    <div class="progress-seg" id="p3"></div>
-    <div class="progress-seg" id="p4"></div>
-    <div class="progress-seg" id="p5"></div>
-    <span class="progress-label" id="progress-pct">0%</span>
+  <div class="form-intro" id="form-intro">
+    <h1>Vertel ons over je <em>project</em></h1>
+    <p>Of je nu een showroom inricht, een ontvangstbalie ontwerpt of een uniek maatwerkmeubelstuk zoekt — vul dit formulier in vóór ons eerste gesprek. Hoe meer context je deelt, hoe gerichter ons gesprek wordt.</p>
   </div>
 
   <div class="error-banner" id="error-banner">
@@ -136,7 +161,7 @@
   <form id="intake-form" novalidate>
 
     <!-- 01 OVER JOU -->
-    <div class="form-section" data-section="1">
+    <div class="form-section">
       <div class="section-head">
         <div class="section-num">01</div>
         <h2 class="section-title">Over jou</h2>
@@ -152,19 +177,35 @@
         </div>
       </div>
       <div class="field">
+        <label for="bedrijf">Bedrijf of organisatie</label>
+        <input type="text" id="bedrijf" name="bedrijf" placeholder="bv. Studio Vermeersch, Hotel Ardenne, …" />
+      </div>
+      <div class="field">
         <label for="email">E-mailadres <span class="req">*</span></label>
-        <input type="email" id="email" name="email" placeholder="jana@voorbeeld.be" required />
+        <input type="email" id="email" name="email" placeholder="jana@studio.be" required />
       </div>
       <div class="field">
         <label for="telefoon">Telefoonnummer</label>
         <input type="tel" id="telefoon" name="telefoon" placeholder="+32 4XX XX XX XX" />
       </div>
       <div class="field">
-        <label>Hoe ben je bij mij terechtgekomen?</label>
+        <label>Type opdrachtgever <span class="req">*</span></label>
         <div class="choice-list">
-          <label class="choice-item"><input type="radio" name="gevonden" value="Aanbeveling van een vriend of kennis" /> Aanbeveling van een vriend of kennis</label>
-          <label class="choice-item"><input type="radio" name="gevonden" value="Vroegere klant" /> Ik ben een vroegere klant</label>
+          <label class="choice-item"><input type="radio" name="type_klant" value="Interieurarchitect of architect" required /> Interieurarchitect of architect</label>
+          <label class="choice-item"><input type="radio" name="type_klant" value="Retail, horeca of hospitality" /> Retail, horeca of hospitality</label>
+          <label class="choice-item"><input type="radio" name="type_klant" value="Event of marketingbureau" /> Event of marketingbureau</label>
+          <label class="choice-item"><input type="radio" name="type_klant" value="Showroom of kantoorinrichting" /> Showroom of kantoorinrichting</label>
+          <label class="choice-item"><input type="radio" name="type_klant" value="Particulier" /> Particulier</label>
+          <label class="choice-item"><input type="radio" name="type_klant" value="Anders" /> Anders</label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Hoe ben je bij ons terechtgekomen?</label>
+        <div class="choice-list">
+          <label class="choice-item"><input type="radio" name="gevonden" value="Aanbeveling van een collega of klant" /> Aanbeveling van een collega of klant</label>
+          <label class="choice-item"><input type="radio" name="gevonden" value="Vroegere samenwerking" /> Vroegere samenwerking</label>
           <label class="choice-item"><input type="radio" name="gevonden" value="Instagram of sociale media" /> Instagram of sociale media</label>
+          <label class="choice-item"><input type="radio" name="gevonden" value="Online zoekopdracht" /> Online zoekopdracht</label>
           <label class="choice-item"><input type="radio" name="gevonden" value="Anders" /> Anders</label>
         </div>
       </div>
@@ -173,42 +214,43 @@
     <div class="divider"></div>
 
     <!-- 02 HET PROJECT -->
-    <div class="form-section" data-section="2">
+    <div class="form-section">
       <div class="section-head">
         <div class="section-num">02</div>
         <h2 class="section-title">Het project</h2>
       </div>
       <div class="field">
-        <label for="project">Wat voor meubel zoek je? <span class="req">*</span></label>
-        <div class="hint">Beschrijf kort wat je voor ogen hebt — type, functie, sfeer.</div>
-        <textarea id="project" name="project" required placeholder="bv. Een grote eettafel voor 8 personen in massief eik, met een industrieel onderstel in geborsteld staal…"></textarea>
+        <label for="project">Beschrijf het project <span class="req">*</span></label>
+        <div class="hint">Type meubel, context, sfeer, specifieke vereisten.</div>
+        <textarea id="project" name="project" required placeholder="bv. Een ontvangstbalie in geborsteld staal en massief eik voor een boetiekhotel in Gent, stijl: warm-industrieel…"></textarea>
       </div>
       <div class="field">
-        <label>Over welke ruimte gaat het?</label>
+        <label>Projectcontext</label>
         <div class="tag-row">
-          <div class="tag"><input type="radio" name="ruimte" id="r1" value="Woonkamer" /><label for="r1">Woonkamer</label></div>
-          <div class="tag"><input type="radio" name="ruimte" id="r2" value="Eetkamer" /><label for="r2">Eetkamer</label></div>
-          <div class="tag"><input type="radio" name="ruimte" id="r3" value="Slaapkamer" /><label for="r3">Slaapkamer</label></div>
-          <div class="tag"><input type="radio" name="ruimte" id="r4" value="Bureau / werkkamer" /><label for="r4">Bureau / werkkamer</label></div>
-          <div class="tag"><input type="radio" name="ruimte" id="r5" value="Keuken" /><label for="r5">Keuken</label></div>
-          <div class="tag"><input type="radio" name="ruimte" id="r6" value="Horeca / professioneel" /><label for="r6">Horeca / professioneel</label></div>
-          <div class="tag"><input type="radio" name="ruimte" id="r7" value="Buiten" /><label for="r7">Buiten</label></div>
-          <div class="tag"><input type="radio" name="ruimte" id="r8" value="Andere" /><label for="r8">Andere</label></div>
+          <div class="tag"><input type="radio" name="ruimte" id="r1" value="Ontvangstbalie" /><label for="r1">Ontvangstbalie</label></div>
+          <div class="tag"><input type="radio" name="ruimte" id="r2" value="Showroomtafel" /><label for="r2">Showroomtafel</label></div>
+          <div class="tag"><input type="radio" name="ruimte" id="r3" value="Winkelinrichting" /><label for="r3">Winkelinrichting</label></div>
+          <div class="tag"><input type="radio" name="ruimte" id="r4" value="Kantoor of vergaderruimte" /><label for="r4">Kantoor / vergadering</label></div>
+          <div class="tag"><input type="radio" name="ruimte" id="r5" value="Horeca of restaurant" /><label for="r5">Horeca / restaurant</label></div>
+          <div class="tag"><input type="radio" name="ruimte" id="r6" value="Hotel of lobby" /><label for="r6">Hotel / lobby</label></div>
+          <div class="tag"><input type="radio" name="ruimte" id="r7" value="Event of installatie" /><label for="r7">Event / installatie</label></div>
+          <div class="tag"><input type="radio" name="ruimte" id="r8" value="Woning" /><label for="r8">Woning</label></div>
+          <div class="tag"><input type="radio" name="ruimte" id="r9" value="Andere" /><label for="r9">Andere</label></div>
         </div>
       </div>
       <div class="field">
         <label for="afmetingen">Gekende afmetingen of beperkingen</label>
-        <div class="hint">Maximale breedte, hoogte, doorgangen, aansluitend meubilair…</div>
-        <input type="text" id="afmetingen" name="afmetingen" placeholder="bv. max. 220 cm breed, past naast bestaande kast van 80 cm" />
+        <div class="hint">Maximale breedte, hoogte, doorgang, aansluitend meubilair of huisstijl…</div>
+        <input type="text" id="afmetingen" name="afmetingen" placeholder="bv. max. 3m breed, past in een bestaande nis van 220cm hoog" />
       </div>
       <div class="field">
         <label>Materiaalvoorkeur</label>
         <div class="tag-row">
-          <div class="tag"><input type="checkbox" name="materiaal" id="m1" value="Massief hout" /><label for="m1">Massief hout</label></div>
-          <div class="tag"><input type="checkbox" name="materiaal" id="m2" value="Metaal / staal" /><label for="m2">Metaal / staal</label></div>
-          <div class="tag"><input type="checkbox" name="materiaal" id="m3" value="Steen / beton" /><label for="m3">Steen / beton</label></div>
-          <div class="tag"><input type="checkbox" name="materiaal" id="m4" value="Leder / stof" /><label for="m4">Leder / stof</label></div>
-          <div class="tag"><input type="checkbox" name="materiaal" id="m5" value="Glas" /><label for="m5">Glas</label></div>
+          <div class="tag"><input type="checkbox" name="materiaal" id="m1" value="Roestvrij staal / Aluminium" /><label for="m1">Roestvrij staal / Aluminium</label></div>
+          <div class="tag"><input type="checkbox" name="materiaal" id="m2" value="Gepoederlakt metaal" /><label for="m2">Gepoederlakt metaal</label></div>
+          <div class="tag"><input type="checkbox" name="materiaal" id="m3" value="Massief hout" /><label for="m3">Massief hout</label></div>
+          <div class="tag"><input type="checkbox" name="materiaal" id="m4" value="Glas" /><label for="m4">Glas</label></div>
+          <div class="tag"><input type="checkbox" name="materiaal" id="m5" value="Steen / beton" /><label for="m5">Steen / beton</label></div>
           <div class="tag"><input type="checkbox" name="materiaal" id="m6" value="Geen voorkeur" /><label for="m6">Geen voorkeur</label></div>
         </div>
       </div>
@@ -220,12 +262,20 @@
           <div class="tag"><input type="checkbox" name="stijl" id="s3" value="Organisch / natuurlijk" /><label for="s3">Organisch / natuurlijk</label></div>
           <div class="tag"><input type="checkbox" name="stijl" id="s4" value="Klassiek / tijdloos" /><label for="s4">Klassiek / tijdloos</label></div>
           <div class="tag"><input type="checkbox" name="stijl" id="s5" value="Speels / kleurrijk" /><label for="s5">Speels / kleurrijk</label></div>
-          <div class="tag"><input type="checkbox" name="stijl" id="s6" value="Weet ik nog niet" /><label for="s6">Weet ik nog niet</label></div>
+          <div class="tag"><input type="checkbox" name="stijl" id="s6" value="Nog niet bepaald" /><label for="s6">Nog niet bepaald</label></div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Beschikt u over bestaande plannen of technische tekeningen?</label>
+        <div class="choice-list">
+          <label class="choice-item"><input type="radio" name="plannen" value="Ja, wij kunnen die doorsturen" /> Ja, wij kunnen die doorsturen</label>
+          <label class="choice-item"><input type="radio" name="plannen" value="Gedeeltelijk" /> Gedeeltelijk : nog in ontwikkeling</label>
+          <label class="choice-item"><input type="radio" name="plannen" value="Nee" /> Nee</label>
         </div>
       </div>
       <div class="field">
         <label>Referentiebeelden</label>
-        <div class="hint">Moodboard, Pinterest, foto's van je ruimte — alles wat sfeer aangeeft.</div>
+        <div class="hint">Moodboard, Pinterest, foto's van de ruimte of bestaand project : alles wat sfeer aangeeft.</div>
         <div class="file-drop" onclick="document.getElementById('file-input').click()" role="button" tabindex="0">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -233,7 +283,7 @@
             <line x1="12" y1="3" x2="12" y2="15"/>
           </svg>
           <p><strong>Klik om afbeeldingen te uploaden</strong></p>
-          <p>JPG, PNG, PDF — max. 10 MB per bestand</p>
+          <p>JPG, PNG, PDF : max. 10 MB per bestand</p>
           <input type="file" id="file-input" accept="image/*,.pdf" multiple style="display:none" onchange="handleFiles(this)" />
         </div>
         <div class="file-list" id="file-list"></div>
@@ -242,27 +292,28 @@
 
     <div class="divider"></div>
 
-    <!-- 03 AANTALLEN & PLANNING -->
-    <div class="form-section" data-section="3">
+    <!-- 03 SCHAAL & PLANNING -->
+    <div class="form-section">
       <div class="section-head">
         <div class="section-num">03</div>
-        <h2 class="section-title">Aantallen & planning</h2>
+        <h2 class="section-title">Schaal & planning</h2>
       </div>
       <div class="field">
-        <label>Gaat het om één stuk of meerdere?</label>
+        <label>Hoeveel stuks gaat het om?</label>
         <div class="choice-list">
           <label class="choice-item"><input type="radio" name="aantal" value="Eén uniek stuk" /> Eén uniek stuk</label>
-          <label class="choice-item"><input type="radio" name="aantal" value="Een reeks van meerdere stuks" /> Een reeks van meerdere stuks (zelfde design)</label>
-          <label class="choice-item"><input type="radio" name="aantal" value="Nog niet zeker" /> Nog niet zeker</label>
+          <label class="choice-item"><input type="radio" name="aantal" value="Kleine reeks (2–5 stuks)" /> Kleine reeks (2–5 stuks)</label>
+          <label class="choice-item"><input type="radio" name="aantal" value="Grotere reeks (6+)" /> Grotere reeks (6+)</label>
+          <label class="choice-item"><input type="radio" name="aantal" value="Nog niet beslist" /> Nog niet beslist</label>
         </div>
       </div>
       <div class="field">
-        <label>Wanneer wil je het meubel idealiter in huis hebben?</label>
+        <label>Wanneer moet het project opgeleverd zijn?</label>
         <div class="choice-list">
-          <label class="choice-item"><input type="radio" name="timing" value="Zo snel mogelijk" /> Zo snel mogelijk <span style="font-size:0.8rem; color:var(--ink-soft)">(ik begrijp dat dit een factor is)</span></label>
+          <label class="choice-item"><input type="radio" name="timing" value="Zo snel mogelijk" /> Zo snel mogelijk <span style="font-size:0.8rem; color:var(--ink-soft)">(u begrijpt dat dit een factor is)</span></label>
           <label class="choice-item"><input type="radio" name="timing" value="Binnen de 6 maanden" /> Binnen de 6 maanden</label>
           <label class="choice-item"><input type="radio" name="timing" value="Binnen het jaar" /> Binnen het jaar</label>
-          <label class="choice-item"><input type="radio" name="timing" value="Flexibel — kwaliteit primeert" /> Flexibel — kwaliteit primeert</label>
+          <label class="choice-item"><input type="radio" name="timing" value="Flexibel : kwaliteit primeert" /> Flexibel : kwaliteit primeert</label>
         </div>
       </div>
     </div>
@@ -270,30 +321,30 @@
     <div class="divider"></div>
 
     <!-- 04 BUDGET -->
-    <div class="form-section" data-section="4">
+    <div class="form-section">
       <div class="section-head">
         <div class="section-num">04</div>
         <h2 class="section-title">Budget</h2>
       </div>
       <div class="field">
         <label>Welk budget houd je voor ogen? <span class="req">*</span></label>
-        <div class="hint">Een eerlijk antwoord voorkomt misverstanden — ik gebruik dit enkel om in te schatten wat haalbaar is qua materialen en uitvoering.</div>
+        <div class="hint">Een eerlijk antwoord voorkomt misverstanden : dit helpt ons inschatten wat haalbaar is qua materialen en uitvoering.</div>
         <div class="budget-grid" id="budget-grid">
           <div class="budget-card">
-            <input type="radio" name="budget" id="b1" value="€1.000 – €2.000" />
-            <label for="b1"><span class="amount">€1.000 – €2.000</span><span class="desc">Kleinere stukken, eenvoudige uitvoering</span></label>
+            <input type="radio" name="budget" id="b1" value="€1.000 – €3.000" />
+            <label for="b1"><span class="amount">€1.000 – €3.000</span><span class="desc">Kleinere stukken, eenvoudige uitvoering</span></label>
           </div>
           <div class="budget-card">
-            <input type="radio" name="budget" id="b2" value="€2.000 – €5.000" />
-            <label for="b2"><span class="amount">€2.000 – €5.000</span><span class="desc">Middelgroot, kwaliteitsvolle afwerking</span></label>
+            <input type="radio" name="budget" id="b2" value="€3.000 – €7.000" />
+            <label for="b2"><span class="amount">€3.000 – €7.000</span><span class="desc">Middelgroot, kwaliteitsvolle afwerking</span></label>
           </div>
           <div class="budget-card">
-            <input type="radio" name="budget" id="b3" value="€5.000 – €10.000" />
-            <label for="b3"><span class="amount">€5.000 – €10.000</span><span class="desc">Maatwerk met premium materialen</span></label>
+            <input type="radio" name="budget" id="b3" value="€7.000 – €15.000" />
+            <label for="b3"><span class="amount">€7.000 – €15.000</span><span class="desc">Maatwerk met premium materialen</span></label>
           </div>
           <div class="budget-card">
-            <input type="radio" name="budget" id="b4" value="€10.000+" />
-            <label for="b4"><span class="amount">€10.000+</span><span class="desc">Ambitieus project, volledige vrijheid</span></label>
+            <input type="radio" name="budget" id="b4" value="€15.000+" />
+            <label for="b4"><span class="amount">€15.000+</span><span class="desc">Ambitieus project, volledige vrijheid</span></label>
           </div>
         </div>
       </div>
@@ -302,7 +353,7 @@
         <div class="choice-list">
           <label class="choice-item"><input type="radio" name="budget_zekerheid" value="Harde grens" /> Dit is een harde grens</label>
           <label class="choice-item"><input type="radio" name="budget_zekerheid" value="Bereid bij te sturen" /> Ik ben bereid bij te sturen als het concept het rechtvaardigt</label>
-          <label class="choice-item"><input type="radio" name="budget_zekerheid" value="Geen goed zicht" /> Ik heb nog geen goed zicht op wat realistisch is</label>
+          <label class="choice-item"><input type="radio" name="budget_zekerheid" value="Nog niet bepaald" /> Nog niet bepaald : nood aan advies</label>
         </div>
       </div>
     </div>
@@ -310,20 +361,20 @@
     <div class="divider"></div>
 
     <!-- 05 EXTRA -->
-    <div class="form-section" data-section="5">
+    <div class="form-section">
       <div class="section-head">
         <div class="section-num">05</div>
         <h2 class="section-title">Nog iets?</h2>
       </div>
       <div class="field">
         <label for="opmerkingen">Extra context of opmerkingen</label>
-        <div class="hint">Speciale functies, beperkingen, of gewoon alles wat kan helpen.</div>
-        <textarea id="opmerkingen" name="opmerkingen" style="min-height:110px;" placeholder="bv. Het meubel moet kindveilig zijn, we hebben een hond, de ruimte is een erkende Airbnb…"></textarea>
+        <div class="hint">Huisstijl, technische vereisten, deadline gebonden aan een opening of event, samenwerkingspartners…</div>
+        <textarea id="opmerkingen" name="opmerkingen" style="min-height:110px;" placeholder="bv. De balie moet geïntegreerd worden in een bestaand interieurconcept van architect X, opening gepland in maart 2026…"></textarea>
       </div>
     </div>
 
     <div class="submit-area">
-      <p class="submit-note">Na ontvangst neem ik binnen de <strong>2 werkdagen</strong> contact op om een kennismakingsgesprek in te plannen.</p>
+      <p class="submit-note">Na ontvangst nemen we binnen de <strong>3 werkdagen</strong> contact op.</p>
       <button type="submit" class="btn-submit" id="submit-btn">
         Aanvraag versturen
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -331,6 +382,12 @@
         </svg>
       </button>
     </div>
+
+    <p class="recaptcha-note">
+      Dit formulier is beveiligd door reCAPTCHA.
+      <a href="https://policies.google.com/privacy" target="_blank">Privacybeleid</a> en
+      <a href="https://policies.google.com/terms" target="_blank">Gebruiksvoorwaarden</a> van Google zijn van toepassing.
+    </p>
 
   </form>
 
@@ -341,41 +398,18 @@
       </svg>
     </div>
     <h2>Aanvraag ontvangen</h2>
-    <p>Bedankt! Ik neem binnen de 2 werkdagen contact op om kennis te maken en te kijken hoe we verder kunnen gaan.</p>
+    <p>Bedankt! We nemen binnen de 3 werkdagen contact op om kennis te maken en te kijken hoe we verder kunnen gaan.</p>
   </div>
 </div>
 
 <script>
   // ── CONFIGURATIE ──────────────────────────────────────────
-  // Alle API-sleutels leven veilig in de Cloudflare Worker.
-  const WORKER_URL = "https://intake.silent-shape-0c9d.workers.dev";
+  const WORKER_URL       = "https://intake.silent-shape-0c9d.workers.dev";
+  const RECAPTCHA_KEY    = "6LdyyQotAAAAAC_Q14SGdc3H3Op0FxIPA6hUNneU";
   // ─────────────────────────────────────────────────────────
 
   let uploadedUrls = [];
   let uploadsInProgress = 0;
-
-  // ── PROGRESS ─────────────────────────────────────────────
-  function updateProgress() {
-    const checks = [
-      () => document.querySelector('[name="gevonden"]:checked'),
-      () => document.getElementById('project').value.trim(),
-      () => document.querySelector('[name="timing"]:checked'),
-      () => document.querySelector('[name="budget"]:checked'),
-      () => document.getElementById('opmerkingen').value.trim()
-    ];
-    const done = checks.filter(fn => !!fn()).length;
-    const pct  = Math.round((done / checks.length) * 100);
-    for (let i = 1; i <= 5; i++) {
-      document.getElementById('p' + i).classList.toggle('done', i <= done);
-    }
-    document.getElementById('progress-pct').textContent = pct + '%';
-    document.getElementById('step-label').textContent   = `Stap ${done} / 5`;
-  }
-
-  document.querySelectorAll('input, textarea').forEach(el => {
-    el.addEventListener('change', updateProgress);
-    el.addEventListener('input',  updateProgress);
-  });
 
   // ── FILE UPLOAD → Cloudflare Worker → Supabase ───────────
   async function handleFiles(input) {
@@ -437,19 +471,24 @@
     if (e.key === 'Enter' || e.key === ' ') document.getElementById('file-input').click();
   });
 
-  // ── FORM SUBMISSION → Cloudflare Worker → Airtable ───────
+  // ── FORM SUBMISSION ───────────────────────────────────────
   document.getElementById('intake-form').addEventListener('submit', async function(e) {
     e.preventDefault();
 
     const errorBanner = document.getElementById('error-banner');
     errorBanner.style.display = 'none';
 
+    // Validation
     let valid = true;
     ['voornaam', 'achternaam', 'email', 'project'].forEach(id => {
       const el = document.getElementById(id);
       if (!el.value.trim()) { el.classList.add('error'); valid = false; }
       else el.classList.remove('error');
     });
+
+    const typeKlant = document.querySelector('[name="type_klant"]:checked');
+    if (!typeKlant) { valid = false; }
+
     const budget = document.querySelector('[name="budget"]:checked');
     if (!budget) {
       document.getElementById('budget-grid').style.outline      = '1px solid #b84040';
@@ -458,14 +497,12 @@
     } else {
       document.getElementById('budget-grid').style.outline = '';
     }
+
     if (!valid) {
       errorBanner.style.display = 'block';
       errorBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
-
-    const materiaal = Array.from(document.querySelectorAll('[name="materiaal"]:checked')).map(el => el.value).join(', ');
-    const stijl     = Array.from(document.querySelectorAll('[name="stijl"]:checked')).map(el => el.value).join(', ');
 
     const overlay = document.getElementById('sending');
     const btn     = document.getElementById('submit-btn');
@@ -473,23 +510,33 @@
     btn.disabled = true;
 
     try {
+      // reCAPTCHA v3 token
+      const recaptchaToken = await grecaptcha.execute(RECAPTCHA_KEY, { action: 'submit' });
+
+      const materiaal = Array.from(document.querySelectorAll('[name="materiaal"]:checked')).map(el => el.value).join(', ');
+      const stijl     = Array.from(document.querySelectorAll('[name="stijl"]:checked')).map(el => el.value).join(', ');
+
       const fields = {
         "Tijdstip":            new Date().toISOString(),
         "Voornaam":            document.getElementById('voornaam').value.trim(),
         "Achternaam":          document.getElementById('achternaam').value.trim(),
+        "Bedrijf":             document.getElementById('bedrijf').value.trim(),
         "E-mail":              document.getElementById('email').value.trim(),
         "Telefoon":            document.getElementById('telefoon').value.trim(),
+        "Type klant":          typeKlant?.value || '',
         "Hoe gevonden":        document.querySelector('[name="gevonden"]:checked')?.value || '',
         "Projectomschrijving": document.getElementById('project').value.trim(),
         "Ruimte":              document.querySelector('[name="ruimte"]:checked')?.value || '',
         "Afmetingen":          document.getElementById('afmetingen').value.trim(),
         "Materiaalvoorkeur":   materiaal,
         "Stijlvoorkeur":       stijl,
+        "Plannen":             document.querySelector('[name="plannen"]:checked')?.value || '',
         "Aantal stuks":        document.querySelector('[name="aantal"]:checked')?.value || '',
         "Timing":              document.querySelector('[name="timing"]:checked')?.value || '',
         "Budget":              budget.value,
         "Budget zekerheid":    document.querySelector('[name="budget_zekerheid"]:checked')?.value || '',
-        "Opmerkingen":         document.getElementById('opmerkingen').value.trim()
+        "Opmerkingen":         document.getElementById('opmerkingen').value.trim(),
+        "reCAPTCHA":           recaptchaToken
       };
 
       if (uploadedUrls.length > 0) {
@@ -505,13 +552,10 @@
       const data = await res.json();
       if (!res.ok) throw new Error(data.error?.message || 'Worker fout');
 
+      // Hide intro and form, show success
+      document.getElementById('form-intro').style.display  = 'none';
       document.getElementById('intake-form').style.display = 'none';
       document.getElementById('success').style.display     = 'block';
-      document.getElementById('step-label').textContent    = '';
-      document.getElementById('progress-pct').textContent  = '';
-      for (let i = 1; i <= 5; i++) {
-        document.getElementById('p' + i).classList.remove('done');
-      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
     } catch (err) {
